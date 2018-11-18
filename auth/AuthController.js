@@ -22,9 +22,10 @@ router.post('/login', function(req, res) {
     if (!user) return res.status(404).send('No user found.');
     
     // check if the password is valid
-    var passwordIsValid = req.body.password.localeCompare(user.password);
-    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+    var passwordIsValid = user.password.localeCompare(req.body.password);
+    if (passwordIsValid != 0) return res.status(401).send({ auth: false, token: null });
 
+    
     // if user is found and password is valid
     // create a token
     var token = jwt.sign({ id: user._id }, config.secret, {
