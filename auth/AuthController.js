@@ -12,12 +12,12 @@ var User = require('../models/userModel');
  * Configure JWT
  */
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var bcrypt = require('bcryptjs');
+
 var config = require('../config'); // get config file
 
 router.post('/login', function(req, res) {
 
-  User.findOne({ mail: req.body.mail }, function (err, user) {
+  User.findOne({ user: req.body.user }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (!user) return res.status(404).send('No user found.');
     
