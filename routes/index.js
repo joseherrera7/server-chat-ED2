@@ -9,7 +9,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get('/', VerifyToken, function (req, res) {
   Chat.find({}, function (err, chats) {
     if (err) return res.status(500).send("There was a problem finding the chats.");
-    res.status(200).send(chats);
+    res.status(200).send({chats});
   });
 });
 
