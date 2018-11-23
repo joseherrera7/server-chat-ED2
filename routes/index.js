@@ -47,6 +47,15 @@ router.get('/:id', VerifyToken,function (req, res) {
   });
 });
 
+router.post('/upload',(req,res) => {
+  let EDFile = req.files.file
+  EDFile.mv(`./public/files/${EDFile.name}`,err => {
+      if(err) return res.status(500).send({ message : err })
+
+      return res.status(200).send({ route : `/public/files/${EDFile.name}` })
+  })
+})
+
 //Modify an user
 router.put('/:id', VerifyToken, function (req, res) {
   Chat.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, chat) {

@@ -28,7 +28,7 @@ router.post('/login', function(req, res) {
     
     // if user is found and password is valid
     // create a token
-    var token = jwt.sign({ id: user._id }, config.secret, {
+    var token = jwt.sign({ user: user.user }, config.secret, {
       expiresIn: 86400 // expires in 24 hours
     });
 
@@ -57,7 +57,7 @@ router.post('/register', function(req, res) {
 
     // if user is registered without errors
     // create a token
-    var token = jwt.sign({ id: user._id }, config.secret, {
+    var token = jwt.sign({ user: user.user }, config.secret, {
       expiresIn: 86400 // expires in 24 hours
     });
 
