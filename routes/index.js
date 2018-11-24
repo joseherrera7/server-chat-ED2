@@ -25,17 +25,31 @@ router.get('/', VerifyToken, function (req, res) {
 
 //Register new chat
 router.post('/', VerifyToken,(req, res, next) => {
-  Chat.create({
-    user1: req.body.user1,
+  Chat.findOne({ user1: req.body.user1,
     user2: req.body.user2,
-    messages: req.body.messages,
+    messages: req.body.messages, }, function (err, chat) {
+    if (err) return res.status(500).send('Error on the server.');
+    if (chat) return res.status(404).send({ auth: false, token: null });
+    
 
-  },
-    function (err, chat) {
-      if (err) return res.status(500).send("There was a problem adding the information to the database.");
-      res.status(200).send(chat);
-    });
+    Chat.create({
+      user1: req.body.user1,
+      user2: req.body.user2,
+      messages: req.body.messages,
+  
+    },
+      function (err, chat) {
+        if (err) return res.status(500).send("There was a problem adding the information to the database.");
+        res.status(200).send(chat);
+      });
+  })
+
+  
+
 });
+  
+  
+
 
 
 //Get an user
