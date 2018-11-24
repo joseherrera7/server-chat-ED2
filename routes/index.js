@@ -47,6 +47,18 @@ router.get('/:id', VerifyToken,function (req, res) {
   });
 });
 
+const path = require('path');
+ 
+// define a route to download a file 
+router.get('/download/:file(*)',(req, res) => {
+  var file = req.params.file;
+  var fileLocation = path.join('./public/files',file);
+  console.log(fileLocation);
+  res.download(fileLocation, file); 
+});
+ 
+
+
 router.post('/upload',(req,res) => {
   let EDFile = req.files.file
   EDFile.mv(`./public/files/${EDFile.name}`,err => {
